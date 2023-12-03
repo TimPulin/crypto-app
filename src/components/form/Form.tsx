@@ -1,19 +1,45 @@
+import { useState } from 'react';
+import uuid from 'react-uuid';
+import { cloneDeep } from 'lodash';
 import Footer from '../Footer';
 import AddDocumentIcon from '../icons/AddDocumentIcon';
 import Wallet from '../wallet/Wallet';
 
+import { WalletType } from '../../utils/types';
+
+const walletInitialState = {
+  id: uuid(),
+  address: '',
+  amount: undefined,
+  currency: '',
+};
+
 export default function Form() {
+  const [formState, setFormState] = useState<WalletType[]>([walletInitialState]);
+
+  // const updateFormState = () => {
+  //   console.log(formState, setFormState);
+  // };
+
+  const addWallet = () => {
+    const formStateTemp = cloneDeep(formState);
+    formStateTemp.push(walletInitialState);
+    setFormState(formStateTemp);
+  };
+
   return (
     <form className="form">
+      {
+        formState.map((item) => (
+          <Wallet wallet={item} key={item.id} />
+        ))
+      }
 
-      <Wallet address="" amount={undefined} />
-      <Wallet
-        address=""
-        amount={undefined}
-        JSXElement={<button type="button" className="button button--poor button--remove">REMOVE</button>}
-      />
-
-      <button type="button" className="button button--icon button--add-wallet">
+      <button
+        type="button"
+        className="button button--icon button--add-wallet"
+        onClick={addWallet}
+      >
         <AddDocumentIcon />
         Add new wallet
       </button>

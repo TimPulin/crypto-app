@@ -11,3 +11,9 @@
     align-self: flex-end;
   }
 }
+
+.wallet:nth-child(1) {
+  .button--remove {
+    display: none;
+  }
+}
