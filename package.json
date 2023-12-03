@@ -14,6 +14,7 @@
     "cross-env": "^7.0.3",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "lodash": "^4.17.21",
     "node-sass": "^7.0.3",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
@@ -21,6 +22,7 @@
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.1",
     "react-scripts": "5.0.1",
+    "react-uuid": "^2.0.0",
     "sass": "^1.66.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
@@ -52,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.202",
     "@types/react-redux": "^7.1.25",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
