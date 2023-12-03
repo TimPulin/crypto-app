@@ -1,0 +1,13 @@
+.wallet {
+  display: flex;
+  flex-direction: column;
+
+  .input-custom:nth-of-type(1) {
+    margin-bottom: 25px;
+  }
+
+  .button--clear,
+  .button--remove {
+    align-self: flex-end;
+  }
+}
