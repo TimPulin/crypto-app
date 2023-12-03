@@ -1,5 +1,11 @@
+import Form from './components/form/Form';
+import Header from './components/Header';
+
 export default function App() {
   return (
-    <div>test</div>
+    <div className="container">
+      <Header />
+      <Form />
+    </div>
   );
 }

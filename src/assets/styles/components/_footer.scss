@@ -1,0 +1,12 @@
+.footer {
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .button--withdraw {
+    display: block;
+    margin: 0 auto;
+  }
+}
