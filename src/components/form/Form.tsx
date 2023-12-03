@@ -23,6 +23,7 @@ export default function Form() {
 
   const addWallet = () => {
     const formStateTemp = cloneDeep(formState);
+    walletInitialState.id = uuid();
     formStateTemp.push(walletInitialState);
     setFormState(formStateTemp);
   };

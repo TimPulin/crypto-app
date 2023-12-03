@@ -10,7 +10,7 @@ type WalletPropsType = {
 export default function Wallet(props: WalletPropsType) {
   const { wallet } = props;
   return (
-    <div className="wallet" id={wallet.id}>
+    <div className="wallet">
       <button type="button" className="button button--poor button--remove">REMOVE</button>
       <InputCustom
         placeholder="wallet address"
