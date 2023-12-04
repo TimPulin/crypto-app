@@ -17,7 +17,7 @@ const walletInitialState = {
 export default function Form() {
   const [formState, setFormState] = useState<WalletType[]>([walletInitialState]);
 
-  // const updateFormState = () => {
+  // const updateWallet = () => {
   //   console.log(formState, setFormState);
   // };
 
@@ -28,11 +28,31 @@ export default function Form() {
     setFormState(formStateTemp);
   };
 
+  const removeWallet = (id: string) => {
+    const formStateTemp = cloneDeep(formState);
+    const walletIndex = formStateTemp.findIndex((item) => item.id === id);
+    formStateTemp.splice(walletIndex, 1);
+    setFormState(formStateTemp);
+  };
+
+  const clearWallet = (id: string) => {
+    const formStateTemp = cloneDeep(formState);
+    const walletIndex = formStateTemp.findIndex((item) => item.id === id);
+    formStateTemp[walletIndex].address = '';
+    formStateTemp[walletIndex].amount = undefined;
+    setFormState(formStateTemp);
+  };
+
   return (
     <form className="form">
       {
         formState.map((item) => (
-          <Wallet wallet={item} key={item.id} />
+          <Wallet
+            key={item.id}
+            wallet={item}
+            removeWallet={removeWallet}
+            clearWallet={clearWallet}
+          />
         ))
       }
 
