@@ -5,12 +5,22 @@ import { WalletType } from '../../utils/types';
 
 type WalletPropsType = {
   wallet: WalletType;
+  updateWallet: (id: string, name: string, value: string) => void;
   removeWallet: (id: string) => void;
   clearWallet: (id: string) => void;
 };
 
+const regexpTestFloat = /(^$)|(^\d+(\.|,)?\d*$)/;
+
 export default function Wallet(props: WalletPropsType) {
-  const { wallet, removeWallet, clearWallet } = props;
+  const {
+    wallet, updateWallet, removeWallet, clearWallet,
+  } = props;
+
+  const updateWalletLocal = (name: string, value:string) => {
+    updateWallet(wallet.id, name, value);
+  };
+
   return (
     <div className="wallet" id={wallet.id}>
       <button
@@ -22,12 +32,17 @@ export default function Wallet(props: WalletPropsType) {
       </button>
       <InputCustom
         placeholder="wallet address"
+        name="address"
         value={wallet.address}
+        onChange={updateWalletLocal}
       />
       <InputCustom
-        placeholder="amount"
         JSXElement={<Currency name="usdt" code="(erc-20)" />}
+        placeholder="amount"
+        name="amount"
         value={wallet.amount}
+        regexpTest={regexpTestFloat}
+        onChange={updateWalletLocal}
       />
       <button
         type="button"

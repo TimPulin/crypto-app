@@ -17,9 +17,20 @@ const walletInitialState = {
 export default function Form() {
   const [formState, setFormState] = useState<WalletType[]>([walletInitialState]);
 
-  // const updateWallet = () => {
-  //   console.log(formState, setFormState);
-  // };
+  function getWalletIndex(id: string):number {
+    return formState.findIndex((item) => item.id === id);
+  }
+
+  const updateWallet = (id: string, name: string, value: string) => {
+    const walletIndex = getWalletIndex(id);
+    const formStateTemp = cloneDeep(formState);
+    if (name === 'amount') {
+      formStateTemp[walletIndex][name] = Number(value);
+    } else {
+      formStateTemp[walletIndex][name] = value;
+    }
+    setFormState(formStateTemp);
+  };
 
   const addWallet = () => {
     const formStateTemp = cloneDeep(formState);
@@ -29,15 +40,15 @@ export default function Form() {
   };
 
   const removeWallet = (id: string) => {
+    const walletIndex = getWalletIndex(id);
     const formStateTemp = cloneDeep(formState);
-    const walletIndex = formStateTemp.findIndex((item) => item.id === id);
     formStateTemp.splice(walletIndex, 1);
     setFormState(formStateTemp);
   };
 
   const clearWallet = (id: string) => {
+    const walletIndex = getWalletIndex(id);
     const formStateTemp = cloneDeep(formState);
-    const walletIndex = formStateTemp.findIndex((item) => item.id === id);
     formStateTemp[walletIndex].address = '';
     formStateTemp[walletIndex].amount = undefined;
     setFormState(formStateTemp);
@@ -50,6 +61,7 @@ export default function Form() {
           <Wallet
             key={item.id}
             wallet={item}
+            updateWallet={updateWallet}
             removeWallet={removeWallet}
             clearWallet={clearWallet}
           />
