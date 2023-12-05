@@ -5,9 +5,9 @@ export enum InputTypeNameEnum {
 }
 
 export type WalletType = {
-  [index:string]: string | number | undefined;
+  [index:string]: string | number;
   id : string;
   address : string;
-  amount :number | undefined;
+  amount :number;
   currency : string;
 };

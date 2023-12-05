@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import { InputTypeNameEnum } from '../../utils/types';
 
@@ -30,6 +30,10 @@ export default function InputCustom(props: InputCustomPropsType) {
       setValue(name, tempValue);
     }
   };
+
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
 
   return (
     <div className="input-custom">

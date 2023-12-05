@@ -1,63 +1,70 @@
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import uuid from 'react-uuid';
+
 import { cloneDeep } from 'lodash';
+import { useEffect } from 'react';
+import { useWalletsFormState } from '../../store/selectors';
+import { updateWalletsForm } from '../../store/slicers/wallets-form-state-slice';
 import Footer from '../Footer';
 import AddDocumentIcon from '../icons/AddDocumentIcon';
 import Wallet from '../wallet/Wallet';
 
-import { WalletType } from '../../utils/types';
-
 const walletInitialState = {
   id: uuid(),
   address: '',
-  amount: undefined,
+  amount: 0,
   currency: '',
 };
 
 export default function Form() {
-  const [formState, setFormState] = useState<WalletType[]>([walletInitialState]);
+  const dispatch = useDispatch();
+  const walletsFormState = useWalletsFormState();
+
+  useEffect(() => {
+    console.log(walletsFormState);
+  }, walletsFormState);
 
   function getWalletIndex(id: string):number {
-    return formState.findIndex((item) => item.id === id);
+    return walletsFormState.findIndex((item) => item.id === id);
   }
 
   const updateWallet = (id: string, name: string, value: string) => {
     const walletIndex = getWalletIndex(id);
-    const formStateTemp = cloneDeep(formState);
+    const formStateTemp = cloneDeep(walletsFormState);
     if (name === 'amount') {
       formStateTemp[walletIndex][name] = Number(value);
     } else {
       formStateTemp[walletIndex][name] = value;
     }
-    setFormState(formStateTemp);
+    dispatch(updateWalletsForm(formStateTemp));
   };
 
   const addWallet = () => {
-    const formStateTemp = cloneDeep(formState);
+    const formStateTemp = cloneDeep(walletsFormState);
     walletInitialState.id = uuid();
     formStateTemp.push(walletInitialState);
-    setFormState(formStateTemp);
+    dispatch(updateWalletsForm(formStateTemp));
   };
 
   const removeWallet = (id: string) => {
     const walletIndex = getWalletIndex(id);
-    const formStateTemp = cloneDeep(formState);
+    const formStateTemp = cloneDeep(walletsFormState);
     formStateTemp.splice(walletIndex, 1);
-    setFormState(formStateTemp);
+    dispatch(updateWalletsForm(formStateTemp));
   };
 
   const clearWallet = (id: string) => {
     const walletIndex = getWalletIndex(id);
-    const formStateTemp = cloneDeep(formState);
+    const formStateTemp = cloneDeep(walletsFormState);
     formStateTemp[walletIndex].address = '';
-    formStateTemp[walletIndex].amount = undefined;
-    setFormState(formStateTemp);
+    formStateTemp[walletIndex].amount = 0;
+    dispatch(updateWalletsForm(formStateTemp));
   };
 
   return (
     <form className="form">
       {
-        formState.map((item) => (
+        walletsFormState.map((item) => (
           <Wallet
             key={item.id}
             wallet={item}
