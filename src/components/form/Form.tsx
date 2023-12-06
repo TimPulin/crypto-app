@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
-import uuid from 'react-uuid';
 
+import uuid from 'react-uuid';
 import { cloneDeep } from 'lodash';
-import { useEffect } from 'react';
+
 import { useWalletsFormState } from '../../store/selectors';
 import { updateWalletsForm } from '../../store/slicers/wallets-form-state-slice';
+
 import Footer from '../Footer';
 import AddDocumentIcon from '../icons/AddDocumentIcon';
 import Wallet from '../wallet/Wallet';
@@ -19,10 +20,6 @@ const walletInitialState = {
 export default function Form() {
   const dispatch = useDispatch();
   const walletsFormState = useWalletsFormState();
-
-  useEffect(() => {
-    console.log(walletsFormState);
-  }, walletsFormState);
 
   function getWalletIndex(id: string):number {
     return walletsFormState.findIndex((item) => item.id === id);
@@ -88,9 +85,3 @@ export default function Form() {
     </form>
   );
 }
-
-/* eslint-disable no-lone-blocks */
-{ /* <label className="form__label">
-<input type="text" placeholder="amount" className="input" />
-<Currency name="usdt" code="(erc-20)" />
-</label> */ }
