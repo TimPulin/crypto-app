@@ -1,6 +1,13 @@
+export enum InputTypeNameEnum {
+  text = 'text',
+  number = 'number',
+  file = 'file',
+}
+
 export type WalletType = {
-  id: string;
-  address: string;
-  amount:number | undefined;
-  currency: string;
+  [index:string]: string | number;
+  id : string;
+  address : string;
+  amount :number;
+  currency : string;
 };
