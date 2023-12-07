@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
-
 import uuid from 'react-uuid';
-import { cloneDeep } from 'lodash';
 
 import { useWalletsFormState } from '../../store/selectors';
-import { updateWalletsForm } from '../../store/slicers/wallets-form-state-slice';
+import {
+  addWallet, updateWallet, removeWallet, clearWallet,
+} from '../../store/slicers/wallets-form-state-slice';
 
 import Footer from '../Footer';
 import AddDocumentIcon from '../icons/AddDocumentIcon';
@@ -21,41 +21,21 @@ export default function Form() {
   const dispatch = useDispatch();
   const walletsFormState = useWalletsFormState();
 
-  function getWalletIndex(id: string):number {
-    return walletsFormState.findIndex((item) => item.id === id);
-  }
-
-  const updateWallet = (id: string, name: string, value: string) => {
-    const walletIndex = getWalletIndex(id);
-    const formStateTemp = cloneDeep(walletsFormState);
-    if (name === 'amount') {
-      formStateTemp[walletIndex][name] = Number(value);
-    } else {
-      formStateTemp[walletIndex][name] = value;
-    }
-    dispatch(updateWalletsForm(formStateTemp));
+  const updateWalletLocal = (id: string, name: string, value: string) => {
+    dispatch(updateWallet({ id, name, value }));
   };
 
-  const addWallet = () => {
-    const formStateTemp = cloneDeep(walletsFormState);
+  const addWalletLocal = () => {
     walletInitialState.id = uuid();
-    formStateTemp.push(walletInitialState);
-    dispatch(updateWalletsForm(formStateTemp));
+    dispatch(addWallet([walletInitialState]));
   };
 
-  const removeWallet = (id: string) => {
-    const walletIndex = getWalletIndex(id);
-    const formStateTemp = cloneDeep(walletsFormState);
-    formStateTemp.splice(walletIndex, 1);
-    dispatch(updateWalletsForm(formStateTemp));
+  const removeWalletLocal = (id: string) => {
+    dispatch(removeWallet(id));
   };
 
-  const clearWallet = (id: string) => {
-    const walletIndex = getWalletIndex(id);
-    const formStateTemp = cloneDeep(walletsFormState);
-    formStateTemp[walletIndex].address = '';
-    formStateTemp[walletIndex].amount = 0;
-    dispatch(updateWalletsForm(formStateTemp));
+  const clearWalletLocal = (id: string) => {
+    dispatch(clearWallet(id));
   };
 
   return (
@@ -65,9 +45,9 @@ export default function Form() {
           <Wallet
             key={item.id}
             wallet={item}
-            updateWallet={updateWallet}
-            removeWallet={removeWallet}
-            clearWallet={clearWallet}
+            updateWallet={updateWalletLocal}
+            removeWallet={removeWalletLocal}
+            clearWallet={clearWalletLocal}
           />
         ))
       }
@@ -75,7 +55,7 @@ export default function Form() {
       <button
         type="button"
         className="button button--icon button--add-wallet"
-        onClick={addWallet}
+        onClick={addWalletLocal}
       >
         <AddDocumentIcon />
         Add new wallet
