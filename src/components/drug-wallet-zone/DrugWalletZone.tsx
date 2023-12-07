@@ -1,17 +1,31 @@
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { parsStringToWalletList } from '../../utils/parse-string-to-wallet-list';
-import Form from './Form';
+import Form from '../form/Form';
 import { addWallet } from '../../store/slicers/wallets-form-state-slice';
 
-export default function FormWrap() {
+const STYLE_DRUG_ZONE_ACTIVE = 'drug-wallet-zone--active';
+
+export default function DrugWalletZone() {
   const dispatch = useDispatch();
+  const [isDrugOver, setIsDrugOver] = useState(false);
+
+  const styleActive = () => (isDrugOver ? STYLE_DRUG_ZONE_ACTIVE : '');
 
   const onDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    setIsDrugOver(true);
+  };
+
+  const onDragLeave = (event:React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDrugOver(false);
   };
 
   const onDragCapture = (event:React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    setIsDrugOver(false);
+
     if (event.dataTransfer.files.length > 0) {
       const file = event.dataTransfer.files[0];
 
@@ -33,9 +47,10 @@ export default function FormWrap() {
 
   return (
     <div
-      className="drug-wallet-list-zone"
+      className={`drug-wallet-zone ${styleActive()}`}
       onDragOver={onDragOver}
       onDrop={onDragCapture}
+      onDragLeave={onDragLeave}
     >
       <Form />
     </div>
