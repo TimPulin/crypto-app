@@ -1,7 +1,11 @@
+import { useDispatch } from 'react-redux';
 import { parsStringToWalletList } from '../../utils/parse-string-to-wallet-list';
 import Form from './Form';
+import { addWallet } from '../../store/slicers/wallets-form-state-slice';
 
 export default function FormWrap() {
+  const dispatch = useDispatch();
+
   const onDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
@@ -18,7 +22,7 @@ export default function FormWrap() {
           if (typeof reader.result === 'string') {
             const data = reader.result;
             const walletList = parsStringToWalletList(data);
-            console.log(walletList);
+            dispatch(addWallet(walletList));
           }
         };
       } else {
