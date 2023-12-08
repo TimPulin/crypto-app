@@ -9,7 +9,7 @@ export default function Header() {
           <span className="header__circle" />
           balance usdt (erc-20)
         </span>
-        <Currency amount={141241.5121} name="usdt" code="(erc-20)" />
+        <Currency amount={141241.5121} name="usdt" />
       </div>
       <div className="header__bottom">
         0x5E22eA4a96501Fb15E2e509AC7581f2e4c991c78

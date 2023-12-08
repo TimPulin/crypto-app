@@ -15,7 +15,7 @@ function createWallet(walletArr: WalletArrType): WalletType | null {
     id: uuid(),
     address: '',
     amount: 0,
-    currency: 'usdt',
+    currency: '',
   };
 
   if (address && address.match(regexpAddressTest)) {
@@ -54,7 +54,7 @@ function splitLine(line: string) {
 export function parsStringToWalletList(str:string) {
   const walletsList:WalletType[] = [];
 
-  const linesArr = str.split('\n');
+  const linesArr = str.split('\r');
 
   linesArr.forEach((item) => {
     const walletArr = splitLine(item);
@@ -68,6 +68,5 @@ export function parsStringToWalletList(str:string) {
     }
     return null;
   });
-
   return walletsList;
 }

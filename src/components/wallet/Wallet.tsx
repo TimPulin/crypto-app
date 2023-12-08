@@ -37,7 +37,7 @@ export default function Wallet(props: WalletPropsType) {
         onChange={updateWalletLocal}
       />
       <InputCustom
-        JSXElement={<Currency name="usdt" code="(erc-20)" />}
+        JSXElement={<Currency name={wallet.currency} />}
         placeholder="amount"
         name="amount"
         value={wallet.amount}
