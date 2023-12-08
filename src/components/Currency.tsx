@@ -1,11 +1,23 @@
+import { useEffect, useState } from 'react';
+
 type CurrencyPropsType = {
   name: string;
-  code?: string;
   amount?: number;
 };
 
 export default function Currency(props: CurrencyPropsType) {
-  const { name, code = '', amount = null } = props;
+  const { name, amount = null } = props;
+  const [nameLocal, setNameLocal] = useState('usdt');
+  const [codeLocal, setCodeLocal] = useState('(erc-20)');
+
+  useEffect(() => {
+    if (name) setNameLocal(name);
+    if (name.toLowerCase() === 'usdt' || name === '') {
+      setCodeLocal('(erc-20)');
+    } else {
+      setCodeLocal('');
+    }
+  }, [name]);
 
   const formatAmount = () => {
     let amountLocal: string;
@@ -19,17 +31,19 @@ export default function Currency(props: CurrencyPropsType) {
     }
     return amountLocal;
   };
+
   return (
     <div className="currency">
       {formatAmount()}
       <div className="currency__name">
-        {name}
-        <span className="currency__code">{code}</span>
+        {nameLocal}
+        {codeLocal && (
+          <span className="currency__code">{codeLocal}</span>
+        )}
       </div>
     </div>
   );
 }
 Currency.defaultProps = {
-  code: '',
   amount: null,
 };
